@@ -9,12 +9,12 @@ class Student:
     RA = ""
     RM = ""
     obs = None
-    status = "1"
+    status = True
     data_registro = ""
     data_status = None
-    sala_id = ""
 
-    def __init__(self, id = None, nome = "", nome_social = None, CPF = "", data_nasc = "", RA = "", RM = "", obs = None, status = "1", data_registro = "", data_status = None, sala_id = ""):
+
+    def __init__(self, id = None, nome = "", nome_social = None, CPF = "", data_nasc = "", RA = "", RM = "", obs = None, status = True, data_registro = "", data_status = None):
         self.id = id
         self.nome = nome
         self.nome_social = nome_social
@@ -26,21 +26,24 @@ class Student:
         self.status = status
         self.data_registro = data_registro
         self.data_status = data_status
-        self.sala_id = sala_id
+
 
     @classmethod
     def Create(cls, student:"Student"):
-        DB = Database()
+        try:
+            DB = Database()
         
-        sql = """INSERT INTO alunos (nome, nome_social, CPF, data_nasc, RA, RM, Observacao)
-                 VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+            sql = """INSERT INTO alunos (nome, nome_social, CPF, data_nasc, RA, RM, Observacao)
+                     VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                  
-        params = (student.nome, student.nome_social, student.CPF, student.data_nasc, student.RA, student.RM, student.obs)
+            params = (student.nome, student.nome_social, student.CPF, student.data_nasc, student.RA, student.RM, student.obs)
+
+            novo_id = DB.insert(sql, params) 
         
-        novo_id = DB.insert(sql, params) 
-        
-        print(f"Aluno inserido com sucesso! ID gerado: {novo_id}")
-        return novo_id
+            print(f"Aluno inserido com sucesso! ID gerado: {novo_id}")
+            return novo_id
+        except Exception as erro:
+            print(f'n]ao foi possível inserir novo aluno: {erro}')
 
     @classmethod
     def Update(cls, student: "Student"):
@@ -103,10 +106,15 @@ class Student:
 
     @classmethod
     def findAll(cls):
-        DB = Database()
-        sql = "SELECT * FROM alunos"
-        result = DB.fetchAll(sql)
-        return cls._getObjectlist(result)
+        try:
+            DB = Database()
+            sql = "SELECT * FROM alunos"
+            result = DB.fetchAll(sql)
+            return cls._getObjectlist(result)
+        except Exception as erro:
+            print(f'Erro lsitagem de alunos: {erro}')
+            raise RuntimeError
+    
     @classmethod
     def findActive(cls):
         try:
