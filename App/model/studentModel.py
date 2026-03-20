@@ -43,7 +43,7 @@ class Student:
             print(f"Aluno inserido com sucesso! ID gerado: {novo_id}")
             return novo_id
         except Exception as erro:
-            print(f'n]ao foi possível inserir novo aluno: {erro}')
+            print(f'nao foi possível inserir novo aluno: {erro}')
 
     @classmethod
     def Update(cls, student: "Student"):
@@ -129,8 +129,7 @@ class Student:
 
 
 if __name__ == "__main__":
-    aluno = Student.findAll()
- 
+    Student.findById(2)
  
 
 
