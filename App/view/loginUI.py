@@ -4,6 +4,8 @@ from PyQt5.uic import loadUi
 from App.controller.loginController import validateLogin
 
 from App.controller.loginController import validateLogin
+from App.controller.loginController import logout
+
 
 class LoginUI(QDialog):
     def __init__(self, **kwargs):
