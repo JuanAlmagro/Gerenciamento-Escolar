@@ -1,4 +1,3 @@
-from App.config.database import Database
 from App.model.studentModel import Student
  
 class StudentController:
@@ -6,15 +5,15 @@ class StudentController:
     @classmethod
     def validateRequiredFields(cls, data):
  
-        required_fields = ['nome', 'CPF', 'data_nasc', 'RA', 'RM']
-        for field in required_fields:
-            if not data.get(field):
-                print(f"Erro: O campo '{field}' é obrigatório e não pode estar vazio.")
+        campos_necessarios = ['nome', 'CPF', 'data_nasc', 'RA', 'RM']
+        for campo in campos_necessarios:
+            if not data.get(campo):
+                print(f"Erro: O campo '{campo}' é obrigatório e não pode estar vazio.")
                 return False
         return True
  
     @classmethod
-    def createStudent(cls, data: dict):
+    def  create(cls, data: dict):
         try:
             if not cls.validateRequiredFields(data):
                 return False
@@ -26,8 +25,7 @@ class StudentController:
                 CPF=data.get("CPF"),
                 data_nasc=data.get("data_nasc"),
                 RA=data.get("RA"),
-                RM=data.get("RM"),
-                observacao=data.get("observacao")
+                RM=data.get("RM")
             )
            
             novo_id = Student.Create(student)
@@ -40,10 +38,8 @@ class StudentController:
             return False
  
     @classmethod
-    def updateStudent(cls, id: int, data: dict):
+    def update(cls, id: int, data: dict):
         try:
-            if not cls.validateRequiredFields(data):
-                return False
  
             student = Student(
                 id=id,
@@ -53,7 +49,7 @@ class StudentController:
                 data_nasc=data.get("data_nasc"),
                 RA=data.get("RA"),
                 RM=data.get("RM"),
-                observacao=data.get("observacao"),
+                obs=data.get("observacao"),
                 status=data.get("status", True)
             )
  
@@ -61,11 +57,11 @@ class StudentController:
             return result
            
         except Exception as e:
-            print(f"Erro no controller ao atualizar os dados do aluno: {e}")
+            print(f"Erro ao atualizar os dados do aluno: {e}")
             return False
  
     @classmethod
-    def deleteStudent(cls, id: int):
+    def delete(cls, id: int):
         try:
             return Student.delete(id)
         except Exception as e:
@@ -73,46 +69,51 @@ class StudentController:
             return False
  
     @classmethod
-    def activateStudent(cls, id: int):
+    def activate(cls, id: int):
         try:
             return Student.activate(id)
         except Exception as e:
-            print(f"Erro no controller ao ativar aluno: {e}")
+            print(f"Erro ao ativar aluno: {e}")
             return False
  
     @classmethod
-    def getStudentById(cls, id: int):
+    def getById(cls, id: int):
         try:
             return Student.findById(id)
         except Exception as e:
-            print(f"Erro no controller ao buscar aluno por ID: {e}")
+            print(f"Erro ao buscar aluno por ID: {e}")
             return None
  
     @classmethod
-    def getAllStudents(cls):
+    def getAll(cls):
         try:
             return Student.findAll()
         except Exception as e:
-            print(f"Erro no controller ao listar todos os alunos: {e}")
+            print(f"Erro ao listar todos os alunos: {e}")
             return []
  
     @classmethod
-    def getActiveStudents(cls):
+    def getActive(cls):
         try:
             return Student.findActive()
         except Exception as e:
-            print(f"Erro no controller ao listar alunos ativos: {e}")
+            print(f"Erro ao listar todos os alunos: {e}")
             return []
  
 if __name__ == "__main__":
  
     aluno_teste = {
         "nome": "João Silva",
-        "nome_social": "",
-        "CPF": "12345678901",
-        "data_nasc": "2010-05-15",
-        "RA": "123456",
-        "RM": "654321",
-        "observacao": "Aluno novo"
-    }
+        "data_nasc": "12/22/1222",
+        "nome_social": "kar212la",
+        "CPF": "5433",
+        "RA": "5637",
+        "RM": "5343",
+
+    } 
+    #StudentController.createStudent(aluno_teste)
+    StudentController.update(7,aluno_teste)
+
+    
+    
  

@@ -64,7 +64,7 @@ class Student:
         raise RuntimeError
         
     @classmethod
-    def delet(cls, id):
+    def delete(cls, id):
         try:
             DB = Database()
             sql = "UPDATE alunos SET status = 0 WHERE id = %s"
@@ -126,10 +126,30 @@ class Student:
         except Exception as erro:
             print(f'Erro lista de alunos ativos {erro}')
             raise RuntimeError
+    
+    def showInfo(self):
+        print(f"""
+            ID : {self.id}
+            Nome : {self.nome}
+            Nome Social: {self.nome_social}
+            CPF: {self.CPF}
+            Data Nascimento: {self.data_nasc}
+            RA: {self.RA}
+            RM: {self.RM}
+            STATUS: {self.status}
+            Data Registro: {self.data_registro}
+        """)
+
 
 
 if __name__ == "__main__":
-    Student.findById(2)
+    usuario = {
+        "id" : 3,
+        "nome" : "Nelson Junior",
+    }
+    student = Student.Update(usuario)
+    print(student.showInfo())
+
  
 
 
