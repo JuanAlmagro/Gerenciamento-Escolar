@@ -1,4 +1,3 @@
-from App.config.database import Database
 from App.model.studentModel import Student
  
 class StudentController:
