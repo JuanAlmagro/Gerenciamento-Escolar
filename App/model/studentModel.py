@@ -57,8 +57,9 @@ class Student:
             params = (student.nome, student.nome_social, student.CPF, student.data_nasc, 
                      student.RA, student.RM, student.obs, student.status, student.id)
                   
-            result = DB.execute(sql, params)
-            return result
+            DB.execute(sql, params)
+            print(f"Aluno atualizado con sucesso, RA: {student.RA}, ID: {student.id}")
+            return student.RA, student.id
         except Exception as erro:
             print(f'Não foi possível atualizar os dados do aluno: {erro}')
         raise RuntimeError
@@ -70,6 +71,7 @@ class Student:
             sql = "UPDATE alunos SET status = 0 WHERE id = %s"
             params = (id , )
             result = DB.execute(sql, params)
+            print('aluno desativado com sucesso!')
             return result
         except Exception as erro:
             print(f'Erro ao tentar desativar o aluno {erro}')
@@ -81,6 +83,7 @@ class Student:
             sql = "UPDATE alunos SET status = 1 WHERE id = %s"
             params = (id , )
             result = DB.execute(sql, params)
+            print('aluno ativado com sucesso!')
             return result
         except Exception as erro:
             print(f'Erro ao tentar desativar o aluno {erro}')
@@ -143,19 +146,4 @@ class Student:
 
 
 if __name__ == "__main__":
-    usuario = {
-        "id" : 3,
-        "nome" : "Nelson Junior",
-    }
-    student = Student.Update(usuario)
-    print(student.showInfo())
-
- 
-
-
-        
-
-
-
-
-    
+    Student.findById(2)
