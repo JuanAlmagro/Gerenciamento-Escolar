@@ -1,5 +1,5 @@
 from App.model.studentModel import Student
- 
+from datetime import datetime
 class StudentController:
  
     @classmethod
@@ -15,6 +15,8 @@ class StudentController:
     @classmethod
     def  create(cls, data: dict):
         try:
+            data_nasc=data.get("data_nasc")
+            data_nasc= datetime.strptime(data_nasc, "%d/%m/%Y")
             if not cls.validateRequiredFields(data):
                 return False
            
@@ -23,7 +25,7 @@ class StudentController:
                 nome=data.get("nome"),
                 nome_social=data.get("nome_social"),
                 CPF=data.get("CPF"),
-                data_nasc=data.get("data_nasc"),
+                data_nasc=data_nasc,
                 RA=data.get("RA"),
                 RM=data.get("RM")
             )
@@ -40,13 +42,18 @@ class StudentController:
     @classmethod
     def update(cls, id: int, data: dict):
         try:
+
+            data_nasc=data.get("data_nasc")
+            data_nasc= datetime.strptime(data_nasc, "%d/%m/%Y")
+            
+
  
             student = Student(
                 id=id,
                 nome=data.get("nome"),
                 nome_social=data.get("nome_social"),
                 CPF=data.get("CPF"),
-                data_nasc=data.get("data_nasc"),
+                data_nasc=data_nasc,
                 RA=data.get("RA"),
                 RM=data.get("RM"),
                 obs=data.get("observacao"),
@@ -104,15 +111,15 @@ if __name__ == "__main__":
  
     aluno_teste = {
         "nome": "João Silva",
-        "data_nasc": "12/22/1222",
+        "data_nasc": "12/02/1222",
         "nome_social": "kar212la",
-        "CPF": "5433",
-        "RA": "5637",
-        "RM": "5343",
+        "CPF": "3215321643",
+        "RA": "311231",
+        "RM": "323231151",
 
     } 
-    #StudentController.createStudent(aluno_teste)
-    StudentController.update(7,aluno_teste)
+    StudentController.create(aluno_teste)
+    #StudentController.update(7,aluno_teste)
 
     
     
