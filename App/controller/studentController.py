@@ -27,7 +27,8 @@ class StudentController:
                 CPF=data.get("CPF"),
                 data_nasc=data_nasc,
                 RA=data.get("RA"),
-                RM=data.get("RM")
+                RM=data.get("RM"),
+                obs=data.get("observacao"),
             )
            
             novo_id = Student.Create(student)
@@ -47,7 +48,7 @@ class StudentController:
             data_nasc= datetime.strptime(data_nasc, "%d/%m/%Y")
             
 
- 
+        
             student = Student(
                 id=id,
                 nome=data.get("nome"),
@@ -66,6 +67,22 @@ class StudentController:
         except Exception as e:
             print(f"Erro ao atualizar os dados do aluno: {e}")
             return False
+        
+    @classmethod
+    def upone (cls , stud:any):
+        try:
+            stud = Student.findById(stud["id"])
+            if not stud:
+                raise ValueError("studante não encontrado")
+
+            
+
+                          
+            result = Student.Update(stud)
+            return result
+        except Exception as e:
+            print(f'Não foi possivel atualizar o usuario \n{e}, {Student.showInfo(stud)}')
+
  
     @classmethod
     def delete(cls, id: int):
@@ -109,17 +126,13 @@ class StudentController:
  
 if __name__ == "__main__":
  
-    aluno_teste = {
-        "nome": "João Silva",
-        "data_nasc": "12/02/1222",
-        "nome_social": "kar212la",
-        "CPF": "3215321643",
-        "RA": "311231",
-        "RM": "323231151",
+    user = {
+        "id" : 1,
+        "observacao": "TDAH",
 
     } 
-    StudentController.create(aluno_teste)
-    #StudentController.update(7,aluno_teste)
+    #StudentController.create(aluno_teste)
+    StudentController.upone(user)
 
     
     

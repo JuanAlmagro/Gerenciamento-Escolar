@@ -141,9 +141,10 @@ class Student:
             RM: {self.RM}
             STATUS: {self.status}
             Data Registro: {self.data_registro}
+            Observações: {self.obs}
         """)
 
 
 
 if __name__ == "__main__":
-    Student.findById(2)
+    Student.Update(2)
