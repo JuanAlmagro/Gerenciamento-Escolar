@@ -65,7 +65,7 @@ class Student:
         raise RuntimeError
         
     @classmethod
-    def delet(cls, id):
+    def delete(cls, id):
         try:
             DB = Database()
             sql = "UPDATE alunos SET status = 0 WHERE id = %s"
@@ -87,6 +87,21 @@ class Student:
             return result
         except Exception as erro:
             print(f'Erro ao tentar desativar o aluno {erro}')
+            raise RuntimeError
+        
+    @classmethod
+    def linkStudentInClassroom(cls, student_id, room_id):
+
+        try:
+            DB = Database()
+            sql = """INSERT INTO sala_alunos (id_aluno, id_sala) VALUES (%s, %s)"""
+
+            params = (student_id, room_id)
+            result = DB.insert(sql, params)
+            print(f"Aluno inserido na sala {result}")
+
+        except Exception as erro:
+            print(f'Erro ao tentar inserir aluno na sala {erro}')
             raise RuntimeError
         
     @classmethod
@@ -129,7 +144,22 @@ class Student:
         except Exception as erro:
             print(f'Erro lista de alunos ativos {erro}')
             raise RuntimeError
+    
+    def showInfo(self):
+        print(f"""
+            ID : {self.id}
+            Nome : {self.nome}
+            Nome Social: {self.nome_social}
+            CPF: {self.CPF}
+            Data Nascimento: {self.data_nasc}
+            RA: {self.RA}
+            RM: {self.RM}
+            STATUS: {self.status}
+            Data Registro: {self.data_registro}
+            Observações: {self.obs}
+        """)
+
 
 
 if __name__ == "__main__":
-    Student.findById(2)
+    Student.Update(2)
